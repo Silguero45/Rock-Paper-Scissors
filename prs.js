@@ -6,7 +6,7 @@ function getComputerChoice(){
     return choiceArr[randomChoice];
 }
 
-function startGame(playerChoice, computerChoice){
+function playRound(playerChoice, computerChoice){
 /** Converts choice into numbers from 3-5, where (a) will always equal the greater value. 
  * If the result of (a mod b) = 1 - b will lose. 
  * If the result of (a mod b) = 2 - a will lose. 
@@ -27,7 +27,7 @@ function startGame(playerChoice, computerChoice){
     var result = 1;
 
     if (a === -1){
-        return "Sorry, not a correct value. Please select Paper, Scissors, Rock.";
+        return -1;
     }
 
     if (a < b){
@@ -51,23 +51,52 @@ function startGame(playerChoice, computerChoice){
         result = 0
     }
 
+    return result;
+    
+}
+
+function interface(round){
+
+    let pv = prompt("Please choose Paper, Scissors, or Rock.", "Paper");
+    let cv = getComputerChoice();
+    let count = round;
+
+    let result = playRound(pv, cv);
+
     if (result === 0) {
-        return "It's a Draw! " + playerChoice + " cancels out " + computerChoice + ".";
+        document.getElementById("round"+round).innerText = "It's a Draw! " + pv + " cancels out " + cv + ".";
     }
     else if (result === 1){
-        return "You Lose! " + computerChoice + " beats " + playerChoice + ".";
+        document.getElementById("round"+round).innerText = "You Lose! " + cv + " beats " + pv + ".";
     }
     else if (result === 2){
-        return "You Win! " + playerChoice + " beats " + computerChoice + ".";
+        document.getElementById("round"+round).innerText = "You Win! " + pv + " beats " + cv + ".";
+        count++;
     }
+    else if (result === -1){
+        document.getElementById("round"+round).innerText = "Sorry, not a correct value. Please select Paper, Scissors, Rock."
+        interface(count);
+    }
+
+    return count;
 }
 
 function game(){
 
-    let pv = document.getElementById("player-choice").value;
-    let cv = getComputerChoice();
+    var rounds = 5;
+    var counter = 0;
 
-    let result = startGame(pv, cv);
+    for(var i = 0; i < rounds; i++){
+        counter = interface(i+1);
+    }
 
-    document.getElementById("result").innerHTML = result
+    if (counter >= 3){
+        document.getElementById("final-result").innerText = "You Win the game!"
+    }
+    else if(counter < 3 && counter > 0){
+        document.getElementById("final-result").innerText = "You lose the game!"
+    }
+    else if(counter === 0){
+        document.getElementById("final-result").innerText = "The game is a draw!"
+    }
 }
