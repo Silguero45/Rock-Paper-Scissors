@@ -1,9 +1,14 @@
 function getComputerChoice(){
-    var choiceArr = ["Rock", "Paper", "Scissor"]
+    var choiceArr = ["Rock", "Paper", "Scissors"]
 
     var randomChoice = Math.floor(Math.random()*choiceArr.length);
 
-    return choiceArr[randomChoice];
+    return choiceArr[randomChoice].toUpperCase();
+}
+
+function getPlayerChoice(){
+    let pv = prompt("Please choose Paper, Scissors, or Rock.", "Paper");
+    return pv.toUpperCase();
 }
 
 function playRound(playerChoice, computerChoice){
@@ -15,16 +20,13 @@ function playRound(playerChoice, computerChoice){
  * Results Key: 0 = Draw , 1 = lose, 2 = win.
  */
 
-    var gameArr = ["PAPER","SCISSORS","ROCK"];
+    let gameArr = ["PAPER","SCISSORS","ROCK"];
 
-    playerChoice = playerChoice.toUpperCase();
-    computerChoice = computerChoice.toUpperCase();
-
-    var a = (gameArr.indexOf(playerChoice)) + 3;
-    var b = (gameArr.indexOf(computerChoice)) + 3;
-    var aInfo = 1;
-    var bInfo = 0;
-    var result = 1;
+    let a = (gameArr.indexOf(playerChoice)) + 3;
+    let b = (gameArr.indexOf(computerChoice)) + 3;
+    let aInfo = 1;
+    let bInfo = 0;
+    let result = 1;
 
     if (a === -1){
         return -1;
@@ -33,6 +35,7 @@ function playRound(playerChoice, computerChoice){
     if (a < b){
         [a,b] = [b,a];
         [aInfo,bInfo] = [bInfo,aInfo];
+
     }
 
 
@@ -57,19 +60,23 @@ function playRound(playerChoice, computerChoice){
 
 function interface(round){
 
-    let pv = prompt("Please choose Paper, Scissors, or Rock.", "Paper");
+    let pv = getPlayerChoice();
     let cv = getComputerChoice();
     let count = round;
 
     let result = playRound(pv, cv);
 
     if (result === 0) {
+        alert("Round - Draw!");
         document.getElementById("round"+round).innerText = "It's a Draw! " + pv + " cancels out " + cv + ".";
+        
     }
     else if (result === 1){
+        alert("Round - Lost")
         document.getElementById("round"+round).innerText = "You Lose! " + cv + " beats " + pv + ".";
     }
     else if (result === 2){
+        alert("Round - Win!");
         document.getElementById("round"+round).innerText = "You Win! " + pv + " beats " + cv + ".";
         count++;
     }
