@@ -7,7 +7,6 @@ optionsEl.addEventListener("click", e => {
     if(round === 1){
         reset();
     }
-    alert(e.target.textContent.toUpperCase());
     playRound(e.target.textContent.toUpperCase());
   });
 
@@ -115,6 +114,7 @@ function gameScore(){
 }
 
 function reset(){
+
     for (let i = 1; i < 6;i++){
         document.getElementById("round"+i).textContent = "";
     }
