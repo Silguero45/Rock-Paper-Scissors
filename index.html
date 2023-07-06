@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="prs.js"></script>
+    <script src="prs.js" async defer ></script>
     <title>Paper, Scissors, Rock Game</title>
 </head>
 <body>
     <div class = "header">
         <h1>Paper, Rock, Scissors</h1>
     </div>
-    <div>
-        <label for = "player-choice">Are you the best? Choose Paper, Scissors, Rock</label>
-        <button onclick="game()">Start Game</button>
+    <p id = "player-choice">Are you the best? Click on Paper, Scissors, or Rock: </p>
+    <div class ='rps-options'>
+        <button id ='btn'>Paper</button>
+        <button id ='btn'>Rock</button>
+        <button id ='btn'>Scissors</button>
     </div>
     <p id = "round1"></p>
     <p id = "round2"></p>

@@ -1,3 +1,17 @@
+var round = 1;
+var counter = 0;
+
+const optionsEl = document.querySelector('.rps-options');
+optionsEl.addEventListener("click", e => {
+    const btn = e.target.closest("btn");
+    if(round === 1){
+        reset();
+    }
+    alert(e.target.textContent.toUpperCase());
+    playRound(e.target.textContent.toUpperCase());
+  });
+
+
 function getComputerChoice(){
     var choiceArr = ["Rock", "Paper", "Scissors"]
 
@@ -6,12 +20,8 @@ function getComputerChoice(){
     return choiceArr[randomChoice].toUpperCase();
 }
 
-function getPlayerChoice(){
-    let pv = prompt("Please choose Paper, Scissors, or Rock.", "Paper");
-    return pv.toUpperCase();
-}
 
-function playRound(playerChoice, computerChoice){
+function game(playerChoice, computerChoice){
 /** Converts choice into numbers from 3-5, where (a) will always equal the greater value. 
  * If the result of (a mod b) = 1 - b will lose. 
  * If the result of (a mod b) = 2 - a will lose. 
@@ -58,52 +68,56 @@ function playRound(playerChoice, computerChoice){
     
 }
 
-function interface(round){
+function playRound(choice){
 
-    let pv = getPlayerChoice();
+
+    let pv = choice;
     let cv = getComputerChoice();
-    let count = round;
 
-    let result = playRound(pv, cv);
+    let result = game(pv, cv);
 
     if (result === 0) {
         alert("Round - Draw!");
-        document.getElementById("round"+round).innerText = "It's a Draw! " + pv + " cancels out " + cv + ".";
+        document.getElementById("round"+round).textContent = "It's a Draw! " + pv + " cancels out " + cv + ".";
         
     }
     else if (result === 1){
         alert("Round - Lost")
-        document.getElementById("round"+round).innerText = "You Lose! " + cv + " beats " + pv + ".";
+        document.getElementById("round"+round).textContent = "You Lose! " + cv + " beats " + pv + ".";
     }
     else if (result === 2){
         alert("Round - Win!");
-        document.getElementById("round"+round).innerText = "You Win! " + pv + " beats " + cv + ".";
-        count++;
-    }
-    else if (result === -1){
-        document.getElementById("round"+round).innerText = "Sorry, not a correct value. Please select Paper, Scissors, Rock."
-        interface(count);
+        document.getElementById("round"+round).textContent = "You Win! " + pv + " beats " + cv + ".";
+        counter++;
     }
 
-    return count;
+    round++;
+
+    if (round > 5){
+        gameScore();
+    }
 }
 
-function game(){
-
-    var rounds = 5;
-    var counter = 0;
-
-    for(var i = 0; i < rounds; i++){
-        counter = interface(i+1);
-    }
+function gameScore(){
 
     if (counter >= 3){
-        document.getElementById("final-result").innerText = "You Win the game!"
+        document.getElementById("final-result").textContent = "You Win the game!"
     }
     else if(counter < 3 && counter > 0){
-        document.getElementById("final-result").innerText = "You lose the game!"
+        document.getElementById("final-result").textContent = "You lose the game!"
     }
     else if(counter === 0){
-        document.getElementById("final-result").innerText = "The game is a draw!"
+        document.getElementById("final-result").textContent= "The game is a draw!"
     }
+
+    round = 1;
+    counter = 0;
+}
+
+function reset(){
+    for (let i = 1; i < 6;i++){
+        document.getElementById("round"+i).textContent = "";
+    }
+
+    document.getElementById("final-result").innerText = "";
 }
